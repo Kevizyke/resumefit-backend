@@ -8,11 +8,16 @@ from app.models.resume import Resume
 from app.models.match_report import MatchReport
 from app.schemas.match_report import MatchReportRequest, MatchReportResponse
 from app.services.ai_matcher import get_match_report
+from app.services.rate_limit import enforce_rate_limit
 
 router = APIRouter(prefix="/api/v1/match-reports", tags=["match-reports"])
 
-
-@router.post("", response_model=MatchReportResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/upload",
+    response_model=MatchReportResponse,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(enforce_rate_limit)],
+)
 def create_match_report(
     request: MatchReportRequest,
     db: Session = Depends(get_db),
