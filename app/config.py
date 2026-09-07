@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     jwt_secret_key: str
     groq_api_key: str
     
-    class Confic:
+    class Config:
         env_file = ".env"
 
 settings = Settings()
