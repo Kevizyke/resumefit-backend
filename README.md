@@ -15,7 +15,8 @@ Upload a resume, paste in a job description, and get back a match score, a skill
 ---
 
 ## 🔗 Live Demo
-
+[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://youtu.be/UtttppB8hqA)
+*<- short demo.*
 - **API base:** `https://resumefit-api.onrender.com`
 - **Interactive docs (Swagger UI):** `https://resumefit-api.onrender.com/docs`
 
