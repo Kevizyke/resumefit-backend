@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: resumefit
+          POSTGRES_PASSWORD: resumefit_dev_password
+          POSTGRES_DB: resumefit
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://resumefit:resumefit_dev_password@localhost:5432/resumefit
+      REDIS_URL: redis://localhost:6379
+      JWT_SECRET_KEY: ci_test_secret_key
+      GEMINI_API_KEY: ci_placeholder_key
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create test database
+        run: |
+          PGPASSWORD=resumefit_dev_password psql -h localhost -U resumefit -d resumefit -c "CREATE DATABASE resumefit_test;"
+
+      - name: Run tests
+        run: pytest -v
