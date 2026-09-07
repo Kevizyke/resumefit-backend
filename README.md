@@ -101,11 +101,11 @@ Full interactive documentation is available at `/docs` (Swagger UI) on any runni
 
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/resumefit.git
-cd resumefit
+git clone https://github.com/Kevizyke/resumefit-backend.git
+cd resumefit-backend 
 
 # Create and activate a virtual environment
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 
 # Install dependencies
