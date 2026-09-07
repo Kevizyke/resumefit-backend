@@ -13,7 +13,7 @@ from app.services.rate_limit import enforce_rate_limit
 router = APIRouter(prefix="/api/v1/match-reports", tags=["match-reports"])
 
 @router.post(
-    "/upload",
+    "",
     response_model=MatchReportResponse,
     status_code=status.HTTP_201_CREATED,
     dependencies=[Depends(enforce_rate_limit)],
